@@ -13,7 +13,7 @@ def user_directory_path(instance, filename):
 @python_2_unicode_compatible
 class File(models.Model):
 
-	user = models.ForeignKey(settings.AUTH_USER_MODEL)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
 	file = models.FileField(upload_to=user_directory_path)
 	accepted = models.BooleanField(default=False)
 
