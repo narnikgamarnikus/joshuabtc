@@ -55,6 +55,8 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'joshuabtc.users.apps.UsersConfig',
+    'joshuabtc.wallets.apps.WalletsConfig',
+    'joshuabtc.files.apps.FilesConfig',
     # Your stuff: custom apps go here
 ]
 
