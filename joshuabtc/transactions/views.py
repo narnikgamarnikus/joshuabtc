@@ -3,15 +3,20 @@ from django.views.generic import DetailView, ListView, RedirectView, UpdateView,
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import BTC#, ETH
+from .models import Transaction
+
+from django.http.response import HttpResponse
+
+from django.shortcuts import get_object_or_404, redirect
+
+from joshuabtc.users.models import User
+
+class TransactionDetailView(LoginRequiredMixin, DetailView):
+    model = Transaction
 
 
-class BTCDetailView(LoginRequiredMixin, DetailView):
-    model = BTC
-
-
-class BTCRedirectView(LoginRequiredMixin, RedirectView):
-    model = BTC
+class TransactionRedirectView(LoginRequiredMixin, RedirectView):
+    model = Transaction
     permanent = False
 
     def get_redirect_url(self):
@@ -19,29 +24,29 @@ class BTCRedirectView(LoginRequiredMixin, RedirectView):
                        kwargs={'pk': self.kwargs['pk']})
 
 
-class BTCUpdateView(LoginRequiredMixin, UpdateView):
+class TransactionUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['user', ]
-    model = BTC
+    model = Transaction
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super(BTCUpdateView, self).form_valid(form)
+        return super(TransactionUpdateView, self).form_valid(form)
 
 
-class BTCListView(LoginRequiredMixin, ListView):
-    model = BTC
+class TransactionListView(LoginRequiredMixin, ListView):
+    model = Transaction
 
 
-class BTCCreateView(LoginRequiredMixin, ListView):
-    model = BTC
+class TransactionCreateView(LoginRequiredMixin, ListView):
+    model = Transaction
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super(BTCCreateView, self).form_valid(form)
+        return super(TransactionCreateView, self).form_valid(form)
 
 
-class BTCDeleteView(LoginRequiredMixin, ListView):
-    model = BTC
+class TransactionDeleteView(LoginRequiredMixin, ListView):
+    model = Transaction
 
 '''
 class ETHDetailView(LoginRequiredMixin, DetailView):
@@ -76,3 +81,14 @@ class ETHCreateView(LoginRequiredMixin, CreateView):
 class ETHDeleteView(LoginRequiredMixin, DeleteView):
     model = ETH
 '''
+
+
+
+def pay(request, transaction_id, user_id):
+    transaction = get_object_or_404(Transaction, pk=transaction_id)
+    user = get_object_or_404(User, pk=user_id)
+    try:
+        transaction.paid_redeem()
+        return redirect(reverse('admin:transactions_transaction_changelist'))
+    except Exception as e:
+        return HttpResponse(e)

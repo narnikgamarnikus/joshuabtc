@@ -1,39 +1,44 @@
 from django.conf.urls import url
 
-from joshuabtc.wallets import views
+from joshuabtc.transactions import views
 
 urlpatterns = [
     url(
-        regex=r'^btc/$',
-        view=views.BTCListView.as_view(),
-        name='btc_list'
+        regex=r'^$',
+        view=views.TransactionListView.as_view(),
+        name='transactions_list'
     ),
     url(
-        regex=r'^btc/(?P<pk>\d+)/~redirect/$',
-        view=views.BTCRedirectView.as_view(),
-        name='btc_redirect'
+        regex=r'^(?P<pk>\d+)/~redirect/$',
+        view=views.TransactionRedirectView.as_view(),
+        name='transactions_redirect'
     ),
     url(
-        regex=r'^btc/(?P<pk>\d+)/$',
-        view=views.BTCDetailView.as_view(),
-        name='btc_detail'
+        regex=r'^(?P<pk>\d+)/$',
+        view=views.TransactionDetailView.as_view(),
+        name='transactions_detail'
     ),
     url(
-        regex=r'^btc/(?P<pk>\d+)/~update/$',
-        view=views.BTCUpdateView.as_view(),
-        name='btc_update'
+        regex=r'^(?P<pk>\d+)/~update/$',
+        view=views.TransactionUpdateView.as_view(),
+        name='transactions_update'
     ),
     url(
-        regex=r'^btc/(?P<pk>\d+)/~delete/$',
-        view=views.BTCDeleteView.as_view(),
-        name='btc_delete'
+        regex=r'^(?P<pk>\d+)/~delete/$',
+        view=views.TransactionDeleteView.as_view(),
+        name='transactions_delete'
     ),
     url(
-        regex=r'^btc/~create/$',
-        view=views.BTCCreateView.as_view(),
-        name='btc_create'
+        regex=r'^~create/$',
+        view=views.TransactionCreateView.as_view(),
+        name='transactions_create'
     ),
-
+    url(
+        regex=r'^pay/(?P<transaction_id>\d+)/(?P<user_id>\d+)$',
+        view=views.pay,
+        name='pay'
+    ),
+]
 '''
     url(
         regex=r'^eth/$',

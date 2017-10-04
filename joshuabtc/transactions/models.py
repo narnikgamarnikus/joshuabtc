@@ -12,18 +12,60 @@ from model_utils import Choices, FieldTracker
 
 
 @python_2_unicode_compatible
-class BTC(models.Model):
+class Transaction(models.Model):
 
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
-	address = models.CharField(max_length=34, null=True)
-	redeem_code = models.CharField(max_length=53, null=True)
-	invoice = models.CharField(max_length=53, null=True)
+	address = models.CharField(max_length=34, blank=True)
+	redeem_code = models.CharField(max_length=53, blank=True)
+	invoice = models.CharField(max_length=53, blank=True)
+	amount = models.CharField(max_length=53, default=0)
+	is_paid = models.BooleanField(default=False)
 
 	def __str__(self):
-		return (self.address)
+		return str(self.address)
 
+	def create_redeem(self):
+		parameters = {"confirmations": 3,}
+		response = requests.get("https://bitaps.com/api/create/redeemcode", params=parameters)
+		return response
+
+	def paid_redeem(self):
+		url = 'https://bitaps.com/api/use/redeemcode'
+		parameters = {
+			'redeemcode': self.redeem_code,
+			'address': '13LSuh4s8CEhs9F7gCBmELnCNJ7mR4rGr9',
+			'amount': 'All available',#self.amount,
+			}
+		response = requests.post(url, data=json.dumps(parameters))
+		self.is_paid = True
+		self.save()
+		return response 
+	
 	def save(self, *args, **kwargs):
 		if not self.address:
+			r = self.create_redeem()
+			r = r.json()
+			self.address = r['address'].encode()
+			self.redeem_code = r['redeem_code'].encode()
+			self.invoice = r['invoice'].encode()
+			'''
+			parameters = {"confirmations": 3,}
+			response = requests.get("https://bitaps.com/api/create/redeemcode", params=parameters)
+			print('CREATE REDEEM CODE' + str(response.text))
+			r = response.json()
+			self.address = r['address'].encode()
+			self.redeem_code = r['redeem_code'].encode()
+			self.invoice = r['invoice'].encode()
+
+			url = 'https://bitaps.com/api/use/redeemcode'
+			parameters = {
+				'redeemcode': self.redeem_code,
+				'address': '13LSuh4s8CEhs9F7gCBmELnCNJ7mR4rGr9',
+				'amount': self.amount,
+				}
+			response = requests.post(url, data=json.dumps(parameters))
+			print('PAY REDEEM CODE' + str(response.text))
+			
 			address = '13LSuh4s8CEhs9F7gCBmELnCNJ7mR4rGr9'
 			callback = urllib.parse.urlencode({
 				"r": self.get_absolute_url()
@@ -39,11 +81,11 @@ class BTC(models.Model):
 			self.address = r['address'].encode()
 			self.redeem_code = r['redeem_code'].encode()
 			self.invoice = r['invoice'].encode()
-			
-			return super(BTC, self).save(*args, **kwargs)
+			'''
+		return super(Transaction, self).save(*args, **kwargs)
 
 	def get_absolute_url(self):
-		return reverse('wallets:btc_detail', kwargs={'pk': self.pk})
+		return reverse('transactions:detail', kwargs={'pk': self.pk})
 
 '''
 class BTCOutPayment(models.Model):

@@ -56,7 +56,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'joshuabtc.users.apps.UsersConfig',
-    'joshuabtc.wallets.apps.WalletsConfig',
+    'joshuabtc.transactions.apps.TransactionsConfig',
     'joshuabtc.files.apps.FilesConfig',
     # Your stuff: custom apps go here
 ]
@@ -266,7 +266,7 @@ SOCIALACCOUNT_ADAPTER = 'joshuabtc.users.adapters.SocialAccountAdapter'
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = r'^admin/' #'users:redirect'
+LOGIN_REDIRECT_URL = 'admin:index' #'users:redirect'
 LOGIN_URL = 'account_login'
 
 # SLUGLIFIER

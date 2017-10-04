@@ -17,6 +17,7 @@ urlpatterns = [
     # User management
     url(r'^users/', include('joshuabtc.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^transactions/', include('joshuabtc.transactions.urls', namespace='transactions')),
 
     # Your stuff: custom urls includes go here
 
