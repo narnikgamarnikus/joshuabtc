@@ -3,7 +3,7 @@ from django.views.generic import DetailView, ListView, RedirectView, UpdateView,
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import BTC, ETH
+from .models import BTC#, ETH
 
 
 class BTCDetailView(LoginRequiredMixin, DetailView):
@@ -43,7 +43,7 @@ class BTCCreateView(LoginRequiredMixin, ListView):
 class BTCDeleteView(LoginRequiredMixin, ListView):
     model = BTC
 
-
+'''
 class ETHDetailView(LoginRequiredMixin, DetailView):
     model = ETH
 
@@ -75,3 +75,4 @@ class ETHCreateView(LoginRequiredMixin, CreateView):
 
 class ETHDeleteView(LoginRequiredMixin, DeleteView):
     model = ETH
+'''
