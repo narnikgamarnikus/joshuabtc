@@ -33,7 +33,7 @@ urlpatterns = [
         view=views.BTCCreateView.as_view(),
         name='btc_create'
     ),
-]
+
 '''
     url(
         regex=r'^eth/$',

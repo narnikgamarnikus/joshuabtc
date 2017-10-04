@@ -15,9 +15,9 @@ from model_utils import Choices, FieldTracker
 class BTC(models.Model):
 
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
-	address = models.CharField(max_length=34)
-	redeem_code = models.CharField(max_length=53)
-	invoice = models.CharField(max_length=53)
+	address = models.CharField(max_length=34, null=True)
+	redeem_code = models.CharField(max_length=53, null=True)
+	invoice = models.CharField(max_length=53, null=True)
 
 	def __str__(self):
 		return (self.address)
