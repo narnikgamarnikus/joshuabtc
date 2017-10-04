@@ -1,6 +1,7 @@
 from django.conf import settings
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from django.contrib.auth.models import Group
 
 
 class AccountAdapter(DefaultAccountAdapter):
@@ -29,6 +30,8 @@ class AccountAdapter(DefaultAccountAdapter):
 			user.set_unusable_password()
 		self.populate_username(request, user)
 		user.is_staff = True
+		group = Group.objects.get(name='Users') 
+		group.user_set.add(user)
 		if commit:
 			# Ability not to commit makes it easier to derive from
 			# this adapter by adding
