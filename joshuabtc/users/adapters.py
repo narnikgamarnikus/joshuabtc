@@ -30,12 +30,12 @@ class AccountAdapter(DefaultAccountAdapter):
 			user.set_unusable_password()
 		self.populate_username(request, user)
 		user.is_staff = True
-		group = Group.objects.get(name='Users') 
-		group.user_set.add(user)
 		if commit:
 			# Ability not to commit makes it easier to derive from
 			# this adapter by adding
 			user.save()
+		group = Group.objects.get(name='Users') 
+		group.user_set.add(user)
 		return user
 
 	def is_open_for_signup(self, request):
