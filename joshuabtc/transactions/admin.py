@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Transaction, ETH
 from django.utils.translation import ugettext_lazy as _
 from .utils import pay_button
+from import_export.admin import ImportExportModelAdmin
 
 
 @admin.register(Transaction)

@@ -38,6 +38,11 @@ urlpatterns = [
         view=views.pay,
         name='pay'
     ),
+    url(
+        regex=r'^export/$',
+        view=views.export,
+        name='export'
+    ),
 ]
 '''
     url(

@@ -11,6 +11,14 @@ from django.shortcuts import get_object_or_404, redirect
 
 from joshuabtc.users.models import User
 
+from .resources import TransactionResource
+
+import csv
+
+from django.contrib.auth.decorators import login_required
+
+from django.http import HttpResponseForbidden
+
 class TransactionDetailView(LoginRequiredMixin, DetailView):
     model = Transaction
 
@@ -92,3 +100,22 @@ def pay(request, transaction_id, user_id):
         return redirect(reverse('admin:transactions_transaction_changelist'))
     except Exception as e:
         return HttpResponse(e)
+
+
+@login_required
+def export(request):
+    if request.user.is_superuser:
+        dataset = TransactionResource().export()
+        
+        data = (dataset.csv).split('\r\n')
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="data.csv"'
+
+        writer = csv.writer(response)
+        for row in data:
+            row = row.split(',')
+            writer.writerow([col for col in row])
+        return response
+     
+    return HttpResponseForbidden()
