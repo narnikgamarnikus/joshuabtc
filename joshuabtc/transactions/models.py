@@ -12,9 +12,39 @@ from model_utils import Choices, FieldTracker
 
 
 @python_2_unicode_compatible
+class ETH(models.Model):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    private = models.CharField(max_length=150)
+    public = models.CharField(max_length=150)
+    address = models.CharField(max_length=150)
+
+    class Meta:
+        verbose_name = _('Eth address')
+        verbose_name_plural = _('Eth addresses')
+
+    def save(self, *args, **kwargs):
+    	if not self.address:
+    		r = requests.post('https://api.blockcypher.com/v1/eth/main/addrs?token=75ada547a1524310971733088eb068ec')
+    		r = r.json()
+    		self.private = r['private']
+    		self.public = r['public']
+    		self.address = r['address']
+    	return super(ETH, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.address
+
+    #def get_absolute_url(self):
+    #    return reverse('transactions:eth_detail', kwargs={'pk': self.pk})
+
+
+
+@python_2_unicode_compatible
 class Transaction(models.Model):
 
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)
+	eth = models.ForeignKey(ETH, null=True, blank=False)
 	address = models.CharField(max_length=34, blank=True)
 	redeem_code = models.CharField(max_length=53, blank=True)
 	invoice = models.CharField(max_length=53, blank=True)
@@ -123,16 +153,4 @@ class BTCOutPayment(models.Model):
 
 
 
-
-@python_2_unicode_compatible
-class ETH(models.Model):
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-
-
-    def __str__(self):
-        return self.user.username
-
-    def get_absolute_url(self):
-        return reverse('wallets:eth_detail', kwargs={'pk': self.pk})
 '''
