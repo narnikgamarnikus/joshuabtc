@@ -29,10 +29,10 @@ class AccountAdapter(DefaultAccountAdapter):
 		else:
 			user.set_unusable_password()
 		self.populate_username(request, user)
-		user.is_staff = True
 		if commit:
 			# Ability not to commit makes it easier to derive from
 			# this adapter by adding
+			user.is_staff = True
 			user.save()
 		#group = Group.objects.get(name='Users') 
 		#group.user_set.add(user)
