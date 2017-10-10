@@ -20,6 +20,12 @@ class TransactionAdmin(admin.ModelAdmin):
 			return ('amount', 'eth', 'address')
 		return super(TransactionAdmin, self).get_fields(request, obj)
 
+	def get_readonly_fields(self, request, obj):
+		if not request.user.is_superuser:
+			return ('amount', 'eth', 'address')
+		return super(TransactionAdmin, self).get_fields(request, obj)
+
+
 	def pay(self, obj):
 		content = ""
 		print(obj.is_paid)
