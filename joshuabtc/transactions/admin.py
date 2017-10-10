@@ -17,7 +17,7 @@ class TransactionAdmin(admin.ModelAdmin):
 					'invoice', 'amount', 'is_paid', 
 					'pay')
 		else:
-			return ('amount', 'eth')
+			return ('amount', 'eth', 'address')
 		return super(TransactionAdmin, self).get_fields(request, obj)
 
 	def pay(self, obj):
