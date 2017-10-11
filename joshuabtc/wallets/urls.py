@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from joshuabtc.transactions import views
+from joshuabtc.wallets import views
 
 urlpatterns = [
     #url(

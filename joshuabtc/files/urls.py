@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from joshuabtc.wallets import views
+from joshuabtc.files import views
 
 urlpatterns = [
     url(
@@ -23,4 +23,9 @@ urlpatterns = [
         view=views.FileUpdateView.as_view(),
         name='update'
     ),
+    url(
+        regex=r'^~create/$',
+        view=views.FileCreateView.as_view(),
+        name='create'
+    ),    
 ]

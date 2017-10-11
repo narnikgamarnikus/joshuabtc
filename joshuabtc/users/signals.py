@@ -1,7 +1,7 @@
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, post_save
 
-from joshuabtc.transactions.models import BTC, ETH
+from joshuabtc.wallets.models import BTC, ETH
 from .models import User
 
 @receiver(post_save, sender=User)

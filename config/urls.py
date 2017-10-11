@@ -6,12 +6,14 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib.auth.decorators import login_required
-from joshuabtc.transactions import views as jviews
+from joshuabtc.wallets import views as walletsviews
+from joshuabtc.files import views as filesviews
 
 urlpatterns = [
     url(r'^$', login_required(TemplateView.as_view(template_name='pages/home.html')), name='home'),
-    url(r'^buy-crypto/$', jviews.BuyCryptoView.as_view(template_name='pages/buy-crypto.html'), name='buy-crypto'),
-    url(r'^about/$', login_required(TemplateView.as_view(template_name='pages/about.html')), name='about'),
+    url(r'^buy-crypto/$', walletsviews.BuyCryptoView.as_view(template_name='pages/buy-crypto.html'), name='buy-crypto'),
+    url(r'^verification/$', filesviews.FileCreateView.as_view(template_name='pages/verification.html'), name='verification'),
+    #url(r'^about/$', login_required(TemplateView.as_view(template_name='pages/about.html')), name='about'),
 
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     # Django Admin, use {% url 'admin:index' %}
@@ -20,8 +22,8 @@ urlpatterns = [
     # User management
     url(r'^users/', include('joshuabtc.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^transactions/', include('joshuabtc.transactions.urls', namespace='transactions')),
-
+    url(r'^wallets/', include('joshuabtc.wallets.urls', namespace='wallets')),
+    url(r'^files/', include('joshuabtc.files.urls', namespace='files')),
     # Your stuff: custom urls includes go here
 
 

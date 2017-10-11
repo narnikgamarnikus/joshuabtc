@@ -1,3 +1,4 @@
+'''
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
@@ -17,3 +18,4 @@ def pay_button(obj):
                     'user_id': obj.user.pk 
                     })
                 )
+'''

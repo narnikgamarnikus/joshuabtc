@@ -1,4 +1,4 @@
-{% load static i18n compress%}<!DOCTYPE html>
+{% load static i18n compress %}<!DOCTYPE html>
 <html lang="ru">
 <head>
 	<meta charset="utf-8">
@@ -10,13 +10,17 @@
 	<title>Мой профиль</title>
 
 	<!-- Global stylesheets -->
+	{% block css %}
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	{% compress css %}
 	<link href="{% static 'css/icons/icomoon/styles.css' %}" rel="stylesheet" type="text/css">
 	<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css">
 	<link href="{% static 'css/core.css' %}" rel="stylesheet" type="text/css">
 	<link href="{% static 'css/components.css' %}" rel="stylesheet" type="text/css">
 	<link href="{% static 'css/colors.css' %}" rel="stylesheet" type="text/css">
 	<link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css">
+	{% endcompress %}
+	{% endblock css %}
 	<!-- /global stylesheets -->
 </head>
 
@@ -131,10 +135,10 @@
 								<li class="active">
 									<a href="profile.html"><i class="icon-user"></i> <span>Мой профиль</span></a>
 								</li>
-								<!--li>
+								<li>
 									<a href="verification.html"><i class="icon-stack-check"></i> <span>Верификация</span></a>
 								</li>
-								<li><a href="history.html"><i class="icon-history"></i> <span>История</span></a></li-->
+								<!--li><a href="history.html"><i class="icon-history"></i> <span>История</span></a></li-->
 								<!-- /main -->
 
 							</ul>
@@ -161,7 +165,7 @@
 	<!-- /page container -->
 
 
-
+{% block javascript %}
 <!-- Core JS files -->
 <script src="https://cdn.jsdelivr.net/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -177,6 +181,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
+{% compress js %}
 <script src="{% static 'js/core/app.js' %}"></script>
 <!-- /theme JS files -->
 
@@ -262,8 +267,11 @@ $(function() {
 
 });
 </script>
+{% endcompress %}
 {% block included_js %}
 {% endblock included_js %}
+{% endblock javascript %}
+
 </body>
 </html>
 

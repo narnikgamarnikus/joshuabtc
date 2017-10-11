@@ -36,7 +36,7 @@ class ETH(models.Model):
         return self.address
 
     def get_absolute_url(self):
-        return reverse('transactions:eth_detail', kwargs={'pk': self.pk})
+        return reverse('wallets:eth_detail', kwargs={'pk': self.pk})
 
 @python_2_unicode_compatible
 class BTC(models.Model):
@@ -69,7 +69,7 @@ class BTC(models.Model):
 
 
     def get_absolute_url(self):
-        return reverse('transactions:btc_detail', kwargs={'pk': self.pk})
+        return reverse('wallets:btc_detail', kwargs={'pk': self.pk})
 
 '''
 @python_2_unicode_compatible

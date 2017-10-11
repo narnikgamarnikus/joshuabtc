@@ -28,7 +28,7 @@ class FileListView(LoginRequiredMixin, ListView):
     model = File
 
 
-class FileCreaetView(LoginRequiredMixin, CreateView):
+class FileCreateView(LoginRequiredMixin, CreateView):
     model = File
 
     def form_valid(self, form):
