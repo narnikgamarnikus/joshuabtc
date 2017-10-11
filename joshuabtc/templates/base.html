@@ -117,7 +117,7 @@
 					</div>
 					<!-- /user menu -->
 
-
+					{% with request.resolver_match.url_name as url_name %}
 					<!-- Main navigation -->
 					<div class="sidebar-category sidebar-category-visible">
 						<div class="category-content no-padding">
@@ -130,14 +130,14 @@
 								<li>
 									<a href="#" class="has-ul"><i class="icon-coins"></i> <span>Купить токены</span></a>
 									<ul class="hidden-ul">
-										<li><a href="{% url 'buy-crypto' %}"><i class="icon-btc position-left"></i> Оплата криптовалютой</a></li>
+										<li {% if url_name == 'buy-crypto' %}class="active"{% endif %}><a href="{% url 'buy-crypto' %}"><i class="icon-btc position-left"></i> Оплата криптовалютой</a></li>
 										<!--li><a href="buy-card.html"><i class="icon-credit-card position-left"></i> Оплата картой</a></li-->
 									</ul>
 								</li>
-								<li class="active">
-									<a href="profile.html"><i class="icon-user"></i> <span>Мой профиль</span></a>
+								<li {% if url_name == 'home' %}class="active"{% endif %}>
+									<a href="{% url 'home' %}"><i class="icon-user"></i> <span>Мой профиль</span></a>
 								</li>
-								<li>
+								<li {% if url_name == 'verification' %}class="active"{% endif %}>
 									<a href="{% url 'verification' %}"><i class="icon-stack-check"></i> <span>Верификация</span></a>
 								</li>
 								<!--li><a href="history.html"><i class="icon-history"></i> <span>История</span></a></li-->
@@ -147,7 +147,7 @@
 						</div>
 					</div>
 					<!-- /main navigation -->
-
+					{% endwith %} 
 				</div>
 			</div>
 			<!-- /main sidebar -->
