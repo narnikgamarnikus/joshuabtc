@@ -19,6 +19,8 @@
 	<link href="{% static 'css/components.css' %}" rel="stylesheet" type="text/css">
 	<link href="{% static 'css/colors.css' %}" rel="stylesheet" type="text/css">
 	<link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.1/css/intlTelInput.css" />
+
 	{% endcompress %}
 	{% endblock css %}
 	<!-- /global stylesheets -->
@@ -136,7 +138,7 @@
 									<a href="profile.html"><i class="icon-user"></i> <span>Мой профиль</span></a>
 								</li>
 								<li>
-									<a href="verification.html"><i class="icon-stack-check"></i> <span>Верификация</span></a>
+									<a href="{% url 'verification' %}"><i class="icon-stack-check"></i> <span>Верификация</span></a>
 								</li>
 								<!--li><a href="history.html"><i class="icon-history"></i> <span>История</span></a></li-->
 								<!-- /main -->
@@ -179,7 +181,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/localization/messages_ru.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/jquery.payment/3.0.0/jquery.payment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.2/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.2/js/locales/ru.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.1/js/intlTelInput.min.js"></script>
 
 {% compress js %}
 <script src="{% static 'js/core/app.js' %}"></script>

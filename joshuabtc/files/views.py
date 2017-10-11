@@ -8,6 +8,7 @@ from .models import File
 
 class FileDetailView(LoginRequiredMixin, DetailView):
     model = File
+    template_name = 'pages/verification.html'
 
 
 class FileRedirectView(LoginRequiredMixin, RedirectView):
@@ -21,7 +22,7 @@ class FileUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super(FileCreaetView, self).form_valid(form)
+        return super(FileUpdateView, self).form_valid(form)
 
 
 class FileListView(LoginRequiredMixin, ListView):
@@ -30,10 +31,11 @@ class FileListView(LoginRequiredMixin, ListView):
 
 class FileCreateView(LoginRequiredMixin, CreateView):
     model = File
+    fields = ['file']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super(FileCreaetView, self).form_valid(form)
+        return super(FileCreateView, self).form_valid(form)
 
 
 class FileDeleteView(LoginRequiredMixin, DeleteView):

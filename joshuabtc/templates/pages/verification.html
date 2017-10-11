@@ -143,11 +143,12 @@
 						<div class="panel-body">
 							<p class="content-group">To verify your identity please provide high resolution photos or scans of accepted documents by attaching them as files in jpg, jpeg, png or pdf format. The following government-issued documents are accepted: national ID card, driver's license, passport.</p>
 							<!-- <p class="content-group">Чтобы подтвердить свою личность, пожалуйста, предоставте фото или скан документов в высоком разрешении, в формате JPG, JPEG, PNG или PDF. Принимаются следующие государственные документы: паспорт или водительское удостоверение.</p> -->
-							<form id="form-identity" action="https://httpbin.org/post">
+							<form id="form-identity" action="{% url 'files:create' %}">
+							{% csrf_token %}
 
 								<fieldset class="content-group">
 									<!-- <legend class="text-bold">Ваше имя</legend> -->
-									<div class="row">
+									<!--div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="profile[first_name]">Имя</label>
@@ -172,13 +173,13 @@
 												/>
 											</div>
 										</div>
-									</div>
+									</div-->
 								</fieldset>
 								<fieldset class="content-group">
 									<!-- <legend class="text-bold">Подтверждающий документ</legend> -->
 									<div class="form-group">
 										<label>Подтверждающий документ</label>
-										<input name="profile[document_photo]" type="file" class="file-loading" multiple required>
+										<input name="file" type="file" class="file-loading" multiple required>
 									</div>
 								</fieldset>
 								<div class="alert-wrapper"></div>
@@ -189,12 +190,12 @@
 						</div>
 					</div>
 					<!-- /form validation -->
-					{% comment %}
+
 					<!-- Form validation -->
-					<div class="panel panel-flat">
-						<div class="panel-heading">
+					<!--div class="panel panel-flat">
+						<div class="panel-heading"-->
 							<!-- <h5 class="panel-title">Подтверждение адреса проживания</h5> -->
-							<h5 class="form-wizard-title text-semibold">
+							<!--h5 class="form-wizard-title text-semibold">
 								<span class="form-wizard-count">3</span>
 								Подтверждение адреса проживания
 								<small class="display-block">Заполните форму и загрузите подтверждающий документ</small>
@@ -207,9 +208,9 @@
 							<form id="form-address" action="https://httpbin.org/post">
 								<fieldset class="content-group">
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-6"-->
 											<!-- <legend class="text-bold">Адрес проживания</legend> -->
-											<div class="form-group">
+											<!--div class="form-group">
 												<label for="address[address]">Адрес</label>
 												<input 
 													type="text"
@@ -513,28 +514,28 @@
 										</div>
 									</div>
 								</fieldset>
-								<fieldset class="content-group">
+								<fieldset class="content-group"-->
 									<!-- <legend class="text-bold">Подтверждающий документ</legend> -->
-									<div class="form-group">
+									<!--div class="form-group">
 										<label>Подтверждающий документ</label>
 										<input name="address[utility_bill_photo]" type="file" class="file-loading" multiple required>
 									</div>
 								</fieldset>
 								<div class="alert-wrapper"></div>
-								<div class="text-right">
+								<div class="text-right"-->
 									<!-- <button type="reset" class="btn btn-default">Очистить <i class="icon-reload-alt position-right"></i></button> -->
-									<button type="submit" class="btn btn-primary">Отправить <i class="icon-check position-right"></i></button>
+									<!--button type="submit" class="btn btn-primary">Отправить <i class="icon-check position-right"></i></button>
 								</div>
 							</form>
 						</div>
-					</div>
+					</div-->
 					<!-- /form validation -->
 
 					<!-- Form validation -->
-					<div class="panel panel-flat">
-						<div class="panel-heading">
+					<!--div class="panel panel-flat">
+						<div class="panel-heading"-->
 							<!-- <h5 class="panel-title">Подтверждение адреса проживания</h5> -->
-							<h5 class="form-wizard-title text-semibold">
+							<!--h5 class="form-wizard-title text-semibold">
 								<span class="form-wizard-count">4</span>
 								Подтверждение владения банковской картой
 								<small class="display-block">Загрузите фото/скан карты</small>
@@ -551,11 +552,11 @@
 								You must hide the first 12 numbers of the card number on the front of the card and the security code (CVC/CCV) on the back of the card.</p>
 							</div>
 							<form id="form-card" action="https://httpbin.org/post">
-								<fieldset class="content-group">
+								<fieldset class="content-group"-->
 									<!-- <legend class="text-bold">Подтверждающий документ</legend> -->
-									<div class="form-group">
+									<!--div class="form-group"-->
 										<!-- <label>Подтверждающий документ</label> -->
-										<input name="payment_card[photos]" type="file" class="file-loading" multiple required>
+										<!--input name="payment_card[photos]" type="file" class="file-loading" multiple required>
 									</div>
 								</fieldset>
 								<div class="alert-wrapper"></div>
@@ -564,9 +565,8 @@
 								</div>
 							</form>
 						</div>
-					</div>
+					</div-->
 					<!-- /form validation -->
-					{% comment %}
 
 					<!-- Footer -->
 					<div class="footer text-muted">
@@ -576,4 +576,178 @@
 
 				</div>
 				<!-- /content area -->
-{% endlock content %}
+{% endblock content %}
+{% block included_js %}
+
+<script>
+$(function() {
+
+	// just for the demos, avoids form submit
+	/*$.validator.setDefaults({
+	  debug: true,
+	  // success: "valid"
+	});*/
+
+
+  var $phone = $('[name="phone_number[phone_number]"]');
+
+	$phone.on('blur', function(e) {
+		$phone.val($phone.intlTelInput("getNumber", intlTelInputUtils.numberFormat.INTERNATIONAL));
+	});
+
+  $phone.intlTelInput({
+    allowDropdown: false,
+    autoPlaceholder: 'aggressive',
+    // separateDialCode: false,
+    preferredCountries: [],
+    nationalMode: false,
+    // onlyCountries: ['us', 'ca'],
+    // customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+    //   return "Phone ( e.g. " + selectedCountryPlaceholder + ' )';
+    // },
+    utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.1/js/utils.js',
+    initialCountry: 'auto',
+    geoIpLookup: function(callback) {
+		/*$.get("https://ipinfo.io", function() {}, "jsonp").always(function(resp) {
+			var countryCode = (resp && resp.country) ? resp.country : "";
+			callback(countryCode);
+		});*/
+		// $.getJSON("https://freegeoip.net/json/").always(function(resp) {
+		$.getJSON("https://ipapi.co/json/").always(function(resp) {
+			// var countryCode = resp && resp.country_code || "";
+			callback(resp && resp.country || "");
+		});
+	},
+  });
+
+	var validateOptions = $.extend({}, $.validator.commonOptions, {
+		submitHandler: app.getSubmitHandler(function(data, form) {
+
+			if (data.status === 'success') {
+				console.log( "success" );
+				$(form).find(':input').fileinput('disable');
+				$(form).find(':submit').hide();
+				app.placeAlert(form, 'success', data.message || 'Данные отправлены и будут в скором времени проверены. Спасибо.');
+				return;
+			}
+
+			if (app.handleErrors(form, data)) {
+				return;
+			}
+
+			app.placeAlert(form, 'error',   data.message || 'Не удалось отправить данные');
+
+		})
+	});
+
+	// Initialize
+	$("#form-phone").validate($.extend({}, $.validator.commonOptions, {
+		rules: {
+			'phone_number[phone_number]': {
+				phone: true,
+			},
+		},
+		submitHandler: app.getSubmitHandler(function(data, form) {
+
+			if (data.status === 'success') {
+				console.log( "success" );
+				$('#form-phone').hide();
+				$('#span-phone').text($phone.val());
+				app.placeAlert($('#form-phone-code').show(), 'success', data.message || 'СМС отправлено. Используйте полученный код для подтверждения.');
+				blockSmsResend();
+				return;
+			}
+			
+			if (app.handleErrors(form, data)) {
+				return;
+			}
+
+			app.placeAlert(form, 'error',   data.message || 'Не удалось отправить СМС');
+
+		}),
+	}));
+
+	$("#form-phone-code").validate($.extend({}, $.validator.commonOptions, {
+		rules: {
+			code: {
+				digits: true,
+				minlength: 4,
+				maxlength: 4,
+			},
+		},
+		submitHandler: app.getSubmitHandler(function(data, form) {
+
+			if (data.status === 'success') {
+				console.log( "success" );
+				$(form).find(':input').prop('disabled', 1);
+				$(form).find(':submit').parent().hide();
+				app.placeAlert(form, 'success', data.message || 'Номер телефона подтвержден');
+				return;
+			}
+			
+			if (app.handleErrors(form, data)) {
+				return;
+			}
+
+			app.placeAlert(form, 'error',   data.message || 'Не удалось отправить код');
+
+		}),
+	}));
+
+
+	var $delayText = $('#sms-delay');
+	var $delay = $('#sms-delay-value');
+	var $resend = $('#sms-resend');
+
+	var blockSmsResendInterval;
+	function blockSmsResend() {
+		clearInterval(blockSmsResendInterval);
+		var delay = 30;
+		$resend.prop('disabled', 1);
+		$delayText.show();
+		$delay.text(delay);
+		blockSmsResendInterval = setInterval(function() {
+			$delay.text(--delay);
+			if (delay == 0) {
+				clearInterval(blockSmsResendInterval);
+				$resend.prop('disabled', 0);
+				$delayText.hide();
+			}
+		}, 1000);
+	  
+	}
+
+	$resend.on('click', function (e) {
+		$("#form-phone-code").hide();
+		$("#form-phone").show().submit();
+	});
+
+
+
+	$("#form-identity").validate(validateOptions);
+	$("#form-address").validate(validateOptions);
+	$("#form-card").validate(validateOptions);
+
+
+	// Reset form
+	/*$('[type=reset]').on('click', function() {
+		validatorAddress.resetForm();
+	});*/
+  
+
+	$(":file").fileinput({
+		theme: 'limitless',
+		language: 'ru',
+		maxFileCount: 2,
+		showRemove: false,
+		showUpload: false,
+		allowedFileExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+		browseIcon: '<i class="icon-image2 position-left"></i> ',
+		browseClass: 'btn btn-default',
+		fileIcon: '<i class="icon-icon-file-picture kv-caption-icon"></i> ',
+		initialCaption: 'Файлы не выбраны',
+	});
+
+});
+</script>
+{% endblock included_js %}
