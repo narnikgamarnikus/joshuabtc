@@ -1,11 +1,11 @@
 from django import forms
 from django.contrib import admin
-from .models import Transaction, ETH
+from .models import ETH, BTC
 from django.utils.translation import ugettext_lazy as _
 from .utils import pay_button
 from import_export.admin import ImportExportModelAdmin
 
-
+'''
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
 	readonly_fields = ('pay', )
@@ -68,3 +68,4 @@ class ETHAdmin(admin.ModelAdmin):
 	def save_model(self, request, obj, form, change):
 		obj.user = request.user
 		super(ETHAdmin, self).save_model(request, obj, form, change)
+'''

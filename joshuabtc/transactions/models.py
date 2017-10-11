@@ -19,14 +19,14 @@ class ETH(models.Model):
     public = models.CharField(max_length=150)
     address = models.CharField(max_length=150)
 
-    class Meta:
-        verbose_name = _('Eth address')
-        verbose_name_plural = _('Eth addresses')
+    #class Meta:
+    #    verbose_name = _('ETH адрес')
+    #    verbose_name_plural = _('ETH адреса')
 
     def save(self, *args, **kwargs):
     	if not self.address:
-    		r = requests.post('https://api.blockcypher.com/v1/eth/main/addrs?token=75ada547a1524310971733088eb068ec')
-    		r = r.json()
+    		response = requests.post('https://api.blockcypher.com/v1/eth/main/addrs?token=75ada547a1524310971733088eb068ec')
+    		r = response.json()
     		self.private = r['private']
     		self.public = r['public']
     		self.address = r['address']
@@ -35,11 +35,43 @@ class ETH(models.Model):
     def __str__(self):
         return self.address
 
-    #def get_absolute_url(self):
-    #    return reverse('transactions:eth_detail', kwargs={'pk': self.pk})
+    def get_absolute_url(self):
+        return reverse('transactions:eth_detail', kwargs={'pk': self.pk})
+
+@python_2_unicode_compatible
+class BTC(models.Model):
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    address = models.CharField(max_length=150)
+    payment_code = models.CharField(max_length=150)
+    invoice = models.CharField(max_length=150)
+
+    #class Meta:
+    #    verbose_name = _('ETH адрес')
+    #    verbose_name_plural = _('ETH адреса')
+
+    def save(self, *args, **kwargs):
+    	if not self.address:
+    		address = '39cjjxHTu7344mXExKb5SoDzbAoDWBpCj9'
+    		callback = urllib.parse.urlencode({"r":"http://www.test.me/addbalance.php?user=118"})[2:]
+    		parameters = {"confirmations": 3,"fee_level":"low",}
+    		url = 'https://bitaps.com/api/create/payment/%s/%s' % (address, callback)
+    		response = requests.get(url, params=parameters)
+    		r = response.json()
+    		self.address = r['address'] 
+    		self.payment_code = r['payment_code']
+    		self.invoice = r['invoice']
+    	return super(BTC, self).save(*args, **kwargs)
 
 
+    def __str__(self):
+    	return self.address
 
+
+    def get_absolute_url(self):
+        return reverse('transactions:btc_detail', kwargs={'pk': self.pk})
+
+'''
 @python_2_unicode_compatible
 class Transaction(models.Model):
 
@@ -53,6 +85,10 @@ class Transaction(models.Model):
 
 	def __str__(self):
 		return str(self.address)
+
+	class Meta:
+		verbose_name = _('BTC адрес')
+		verbose_name_plural = _('BTC адреса')
 
 	def create_redeem(self):
 		parameters = {"confirmations": 3,}
@@ -78,7 +114,7 @@ class Transaction(models.Model):
 			self.address = r['address'].encode()
 			self.redeem_code = r['redeem_code'].encode()
 			self.invoice = r['invoice'].encode()
-			'''
+			
 			parameters = {"confirmations": 3,}
 			response = requests.get("https://bitaps.com/api/create/redeemcode", params=parameters)
 			print('CREATE REDEEM CODE' + str(response.text))
@@ -111,13 +147,13 @@ class Transaction(models.Model):
 			self.address = r['address'].encode()
 			self.redeem_code = r['redeem_code'].encode()
 			self.invoice = r['invoice'].encode()
-			'''
+			
 		return super(Transaction, self).save(*args, **kwargs)
 
 	def get_absolute_url(self):
 		return reverse('transactions:detail', kwargs={'pk': self.pk})
 
-'''
+
 class BTCOutPayment(models.Model):
 
 	FEE_LEVELS = Choices(

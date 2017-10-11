@@ -1,0 +1,53 @@
+
+.layout-boxed {
+  background-color: rgb(67, 73, 83);
+}
+
+.navbar-brand > img {
+  height: 22px;
+  margin-top: -2px;
+}
+.login-logo {
+  text-align: center;
+}
+.login-logo > img {
+  height: 30px;
+  margin: 0 12px 20px 0;
+}
+
+.form-group .intl-tel-input {
+  display: block;
+}
+.form-group .intl-tel-input .selected-flag {
+  height: 34px;
+}
+
+.editableform .control-group {
+  white-space: nowrap;
+}
+
+
+
+.panel-calc .img-currency {
+	height: 50px;
+}
+
+
+
+.icon-btc::before {
+  background: rgba(0, 0, 0, 0) url(../images/crypto/btc-white.svg) no-repeat -1px 0 / 16px auto;
+  content: " ";
+  display: block;
+  height: 16px;
+  opacity: 0.75;
+  transition: opacity 0.15s linear 0s;
+}
+/*.navigation li a:focus, .navigation li a:hover {*/
+a:focus .icon-btc::before, a:hover .icon-btc::before, .active > a > .icon-btc::before {
+  background-color: rgba(0, 0, 0, 0.1);
+  opacity: 1;
+}
+
+.zero {
+	opacity: 0.5;
+}

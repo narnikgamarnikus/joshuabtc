@@ -5,10 +5,13 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from django.conf.urls.i18n import i18n_patterns
+from django.contrib.auth.decorators import login_required
+from joshuabtc.transactions import views as jviews
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
-    url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+    url(r'^$', login_required(TemplateView.as_view(template_name='pages/home.html')), name='home'),
+    url(r'^buy-crypto/$', jviews.BuyCryptoView.as_view(template_name='pages/buy-crypto.html'), name='buy-crypto'),
+    url(r'^about/$', login_required(TemplateView.as_view(template_name='pages/about.html')), name='about'),
 
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     # Django Admin, use {% url 'admin:index' %}

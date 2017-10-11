@@ -1,1 +1,229 @@
 {% extends "base.html" %}
+{% block content %}
+
+				<!-- Page header -->
+				<div class="page-header page-header-default page-header-xs">
+					<div class="page-header-content">
+						<div class="page-title">
+							<h4>
+							<i class="icon-user position-left"></i>
+							<span class="text-semibold">Мой профиль</span></h4>
+						</div>
+						<!-- <div class="heading-elements">
+							<a href="#" class="btn btn-labeled btn-labeled-right bg-blue heading-btn">Button <b><i class="icon-menu7"></i></b></a>
+						</div> -->
+					</div>
+
+					<!-- <div class="breadcrumb-line">
+						<ul class="breadcrumb">
+							<li><a href="index.html"><i class="icon-home2 position-left"></i> Home</a></li>
+							<li><a href="layout_navbar_fixed_main.html">Starters</a></li>
+							<li class="active">Fixed main</li>
+						</ul>
+
+						<ul class="breadcrumb-elements">
+							<li><a href="#"><i class="icon-comment-discussion position-left"></i> Link</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<i class="icon-gear position-left"></i>
+									Dropdown
+									<span class="caret"></span>
+								</a>
+
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+									<li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+									<li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+									<li class="divider"></li>
+									<li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div> -->
+				</div>
+				<!-- /page header -->
+
+
+				<!-- Content area -->
+				<div class="content">
+
+
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">Личная информация</h5>
+						</div>
+
+						<div class="panel-body">
+							<!-- <form id="form-personal" action="http://echo.jsontest.com/status/success"> -->
+							<form id="form-personal" method="post" action="{% url 'users:update' %}">
+							{% csrf_token %}
+							<fieldset class="content-group">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="first_name">Имя</label>
+											<input 
+												type="text"
+												class="form-control"
+												name="first_name"
+												placeholder="Иван"
+												value="{{ user.first_name }}"
+												required
+											/>
+										</div>
+										<div class="form-group">
+											<label for="last_name">Фамилия</label>
+											<input 
+												type="text"
+												class="form-control"
+												name="last_name"
+												placeholder="Иванов"
+												value="{{ user.last_name }}"
+												required
+											/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Email</label>
+											<!-- <input 
+												type="text"
+												class="form-control"
+												value="ivanushka1980@gmail.com" 
+												readonly
+											/> -->
+											<span class="form-control" disabled>
+												{{ user.email }}
+											</span>
+										</div>
+										<div class="form-group">
+											<label for="phone_number">Телефон</label>
+											<input 
+												type="text"
+												class="form-control"
+												name="phone_number"
+												placeholder="+7 916 1112233"
+												value="{{ user.phone_number }}"
+												required
+											/>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+							<div class="alert-wrapper"></div>
+							<div class="text-right">
+								<button type="submit" class="btn btn-primary">Сохранить <i class="icon-check position-right"></i></button>
+							</div>
+							</form>
+						</div>
+					</div>
+
+					<!--div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">Социальные сети</h5>
+						</div>
+						<div class="panel-body"-->
+							<!-- <p class="content-group">Подключите свои учетные записи в социальных сетях.</p> -->
+							<!--div class="row">
+								<div class="col-md-3">
+									<div class="panel">
+										<div class="panel-body text-center">
+											<div class="icon-object" style="color: rgb(59, 89, 152);"><i class="icon-facebook"></i></div>
+											<h5 class="text-semibold">Facebook</h5>
+											<a href="#" class="btn bg-primary">Подключить<i class="icon-plus2 position-right"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="panel">
+										<div class="panel-body text-center">
+											<div class="icon-object" style="color: rgb(85, 172, 238);"><i class="icon-twitter"></i></div>
+											<h5 class="text-semibold">Twitter</h5>
+											<span class="btn border-success-300" style="box-shadow: none; cursor: default;"><i class="icon-checkmark position-left text-success"></i>@Ivanushka</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="panel">
+										<div class="panel-body text-center">
+											<div class="icon-object" style="color: rgb(221, 79, 67);"><i class="icon-google-plus"></i></div>
+											<h5 class="text-semibold">Google+</h5>
+											<a href="#" class="btn bg-primary">Подключить<i class="icon-plus2 position-right"></i></a>
+										</div>
+									</div>
+								</div>
+							</div-->
+							<!-- <div class="form-group">
+								<button type="button" class="btn btn-default"><i class="icon-facebook2 icon-2x position-left" style="color: #3B5998;"></i> подключить Facebook</button>
+								<button type="button" class="btn btn-default"><i class="icon-twitter2 icon-2x position-left" style="color: #55ACEE;"></i> подключить Twitter</button>
+								<button type="button" class="btn btn-default"><i class="icon-google-plus2 icon-2x position-left" style="color: #DD4F43;"></i> подключить Google+</button>
+							</div> -->
+
+						<!--/div>
+					</div-->
+
+					<!--div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">Сменить пароль</h5>
+						</div>
+						<div class="panel-body">
+							<form id="form-reset-password" method="post" action="{% url 'account_change_password' %}">
+							{% csrf_token %}
+							<fieldset class="content-group"-->
+								<!-- <legend class="text-bold">Сменить пароль</legend> -->
+								<!--div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="oldpassword">Старый пароль</label>
+											<input 
+												type="password"
+												class="form-control"
+												name="oldpassword"
+												placeholder=""
+												required
+											/>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="password1">Новый пароль</label>
+											<input 
+												type="password" 
+												class="form-control" 
+												name="password1"
+												placeholder=""
+												required 
+											/>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="password2">Повторите новый пароль</label>
+											<input 
+												type="password" 
+												class="form-control"
+												name="password2"
+												placeholder=""
+												required
+											/>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+							<div class="alert-wrapper"></div>
+							<div class="text-right">
+								<button type="submit" class="btn btn-primary">Сменить пароль <i class="icon-check position-right"></i></button>
+							</div>
+							</form>
+						</div>
+					</div-->
+
+					<!-- Footer -->
+					<div class="footer text-muted">
+						&copy; 2015. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
+					</div>
+					<!-- /footer -->
+
+				</div>
+				<!-- /content area -->
+{% endblock content %}

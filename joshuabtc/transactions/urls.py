@@ -3,6 +3,23 @@ from django.conf.urls import url
 from joshuabtc.transactions import views
 
 urlpatterns = [
+    #url(
+    #    regex=r'^export/$',
+    #    view=views.export,
+    #    name='export'
+    #),
+    url(
+        regex=r'^eth/(?P<pk>\d+)/$',
+        view=views.ETHDetailView,
+        name='eth_detail'
+    ),
+    url(
+        regex=r'^btc/(?P<pk>\d+)/$',
+        view=views.BTCDetailView,
+        name='btc_detail'
+    )
+]
+'''
     url(
         regex=r'^$',
         view=views.TransactionListView.as_view(),
@@ -38,13 +55,7 @@ urlpatterns = [
         view=views.pay,
         name='pay'
     ),
-    url(
-        regex=r'^export/$',
-        view=views.export,
-        name='export'
-    ),
-]
-'''
+
     url(
         regex=r'^eth/$',
         view=views.ETHListView.as_view(),

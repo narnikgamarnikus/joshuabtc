@@ -3,7 +3,7 @@ from django.views.generic import DetailView, ListView, RedirectView, UpdateView,
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Transaction
+from .models import ETH, BTC
 
 from django.http.response import HttpResponse
 
@@ -11,13 +11,36 @@ from django.shortcuts import get_object_or_404, redirect
 
 from joshuabtc.users.models import User
 
-from .resources import TransactionResource
+#from .resources import TransactionResource
 
 import csv
 
 from django.contrib.auth.decorators import login_required
 
 from django.http import HttpResponseForbidden
+
+
+class ETHDetailView(LoginRequiredMixin, DetailView):
+    model = ETH
+
+
+class BTCDetailView(LoginRequiredMixin, DetailView):
+    model = BTC
+
+
+class BuyCryptoView(LoginRequiredMixin, DetailView):
+    model = User
+
+    def get_context_data(self, **kwargs):
+        context = super(BuyCryptoView, self).get_context_data(**kwargs)
+        context['btc'] = get_object_or_404(BTC, user=self.object)
+        context['eth'] = get_object_or_404(ETH, user=self.object)
+        return context
+
+    def get_object(self):
+        # Only get the User record for the user making the request
+        return User.objects.get(username=self.request.user.username)
+'''
 
 class TransactionDetailView(LoginRequiredMixin, DetailView):
     model = Transaction
@@ -56,7 +79,7 @@ class TransactionCreateView(LoginRequiredMixin, ListView):
 class TransactionDeleteView(LoginRequiredMixin, ListView):
     model = Transaction
 
-'''
+
 class ETHDetailView(LoginRequiredMixin, DetailView):
     model = ETH
 
@@ -88,7 +111,7 @@ class ETHCreateView(LoginRequiredMixin, CreateView):
 
 class ETHDeleteView(LoginRequiredMixin, DeleteView):
     model = ETH
-'''
+
 
 
 
@@ -100,8 +123,8 @@ def pay(request, transaction_id, user_id):
         return redirect(reverse('admin:transactions_transaction_changelist'))
     except Exception as e:
         return HttpResponse(e)
-
-
+'''
+'''
 @login_required
 def export(request):
     if request.user.is_superuser:
@@ -119,3 +142,4 @@ def export(request):
         return response
      
     return HttpResponseForbidden()
+'''
