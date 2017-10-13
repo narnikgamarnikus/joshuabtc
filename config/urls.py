@@ -10,9 +10,10 @@ from joshuabtc.wallets import views as walletsviews
 from joshuabtc.files import views as filesviews
 
 urlpatterns = [
-    url(r'^$', login_required(TemplateView.as_view(template_name='pages/home.html')), name='home'),
-    url(r'^buy-crypto/$', walletsviews.BuyCryptoView.as_view(template_name='pages/buy-crypto.html'), name='buy-crypto'),
-    url(r'^verification/$', filesviews.FileCreateView.as_view(template_name='pages/verification.html'), name='verification'),
+    url(r'^$', TemplateView.as_view(template_name='pages/index.html'), name='index'),
+    url(r'^personal/$', login_required(TemplateView.as_view(template_name='pages/home.html')), name='home'),
+    url(r'^personal/buy-crypto/$', walletsviews.BuyCryptoView.as_view(template_name='pages/buy-crypto.html'), name='buy-crypto'),
+    url(r'^personal/verification/$', filesviews.FileCreateView.as_view(template_name='pages/verification.html'), name='verification'),
     #url(r'^about/$', login_required(TemplateView.as_view(template_name='pages/about.html')), name='about'),
 
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
