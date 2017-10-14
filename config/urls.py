@@ -9,11 +9,11 @@ from django.contrib.auth.decorators import login_required
 from joshuabtc.wallets import views as walletsviews
 from joshuabtc.files import views as filesviews
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     url(r'^$', TemplateView.as_view(template_name='pages/index.html'), name='index'),
-    url(r'^personal/$', login_required(TemplateView.as_view(template_name='pages/home.html')), name='home'),
-    url(r'^personal/buy-crypto/$', walletsviews.BuyCryptoView.as_view(template_name='pages/buy-crypto.html'), name='buy-crypto'),
-    url(r'^personal/verification/$', filesviews.FileCreateView.as_view(template_name='pages/verification.html'), name='verification'),
+    #url(r'^p/$', login_required(TemplateView.as_view(template_name='pages/home.html')), name='home'),
+    #url(r'^p/buy-crypto/$', walletsviews.BuyCryptoView.as_view(template_name='pages/buy-crypto.html'), name='buy-crypto'),
+    #url(r'^p/verification/$', filesviews.FileCreateView.as_view(template_name='pages/verification.html'), name='verification'),
     #url(r'^about/$', login_required(TemplateView.as_view(template_name='pages/about.html')), name='about'),
 
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
@@ -23,12 +23,13 @@ urlpatterns = [
     # User management
     url(r'^users/', include('joshuabtc.users.urls', namespace='users')),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^wallets/', include('joshuabtc.wallets.urls', namespace='wallets')),
-    url(r'^files/', include('joshuabtc.files.urls', namespace='files')),
+    #url(r'^wallets/', include('joshuabtc.wallets.urls', namespace='wallets')),
+    #url(r'^files/', include('joshuabtc.files.urls', namespace='files')),
     # Your stuff: custom urls includes go here
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

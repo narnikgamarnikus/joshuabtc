@@ -1,4 +1,4 @@
-{% load static compress %}
+{% load i18n static compress users %}
 <!DOCTYPE html>
 <html lang="en" class="full-height">
 <head>
@@ -49,7 +49,16 @@
 		.border-color {
 			border: 2px solid #5a40fc;
 		}
+		.dropdown .dropdown-menu .dropdown-item:active, .dropdown .dropdown-menu .dropdown-item:focus, .dropdown .dropdown-menu .dropdown-item:hover {
+			background: #5a40fc;
+		}
+		/*
+		.dropdown .dropdown-menu .dropdown-item:active, .dropdown .dropdown-menu .dropdown-item:focus, .dropdown .dropdown-menu .dropdown-item:hover a {
+			color: white !important;
+		}
+		*/
     </style>
+}
 </head>
 <body>
 
@@ -65,7 +74,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
+                        <!--li class="nav-item active">
                             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
@@ -73,11 +82,33 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Team</a>
-                        </li>
+                        </li-->
                     </ul>
-                    <form class="form-inline">
+                    <!--form class="form-inline">
                         <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    </form>
+                    </form-->
+
+                  <div class="dropdown">
+                      <button style="background: #FFF; color: #5a40fc !important" class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ LANGUAGE_CODE }}
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                          {% get_current_language as LANGUAGE_CODE %}
+                          {% get_available_languages as LANGUAGES %}
+                          {% get_language_info_list for LANGUAGES as languages %}
+                          {% for language in languages %}
+                          <a class="dropdown-item {% if language.code == LANGUAGE_CODE %}disabled{% endif %}" href="#" onclick="setLanguage('{{ language.code }}');">{{ language.name_local }} ({{ language.code }})</a>
+                          {% endfor %}
+
+                      </div>
+                  </div>
+                  <form id="languageForm" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}" />
+                    <select name="language">
+                      <option id="languageFormOption" value="">
+                    </select>
+                  </form>
+
                 </div>
             </div>
         </nav>
@@ -94,9 +125,9 @@
                                 		<img src="{% static 'images/xlogo-web.png.pagespeed.ic.8Ky_IveaT_.png' %}">
                                 	</li>
                                     <li>
-                                        <h1 class="display-4 font-bold mb-5 wow fadeInUp" style="margin-top: 3rem">Lucyd Lens, the world’s first blockchain-fueled smartglasses.</h1></li>
+                                        <h1 class="display-4 font-bold mb-5 wow fadeInUp" style="margin-top: 3rem; font-size: 2.5rem">{% trans 'Lucyd Lens, the world’s first blockchain-fueled smartglasses' %}</h1></li>
                                     <li>
-                                        <h5 class="mb-5 wow fadeInUp" data-wow-delay="0.2s">Crowdsale start in</h5>
+                                        <h5 class="mb-5 wow fadeInUp" data-wow-delay="0.2s" style="font-size: 1.5rem"">{% trans 'Crowdsale start in' %}</h5>
                                     </li>
                                     <li>
 
@@ -104,8 +135,8 @@
 											
 										<div class="d-flex justify-content-between" style="font-size: 1rem; margin-top: 5rem">	
 
-											<span>Токенов продано</span>
-											<span>Обновляется автоматически, раз в минуту</span>
+											<span>{% trans 'Tokens sold (crowdsale)' %}</span>
+											<span>{% trans 'Updates automatically every 60 sec' %}</span>
 
 										</div>
 
@@ -116,7 +147,7 @@
 										<div class="d-flex justify-content-between" style="font-size: 1rem; margin-top: 1rem">	
 
 											<span> 3,436,833 LCD </span>
-											<span> Верхняя планка 30,000,000 LCD </span>
+											<span> {% trans 'Hardcap' %} 30,000,000 LCD </span>
 
 										</div>
 
@@ -126,10 +157,13 @@
 
 										</p-->
 									</li>
-									<!--li class="wow fadeInUp" data-wow-delay="0.4s">
-                                        <a class="btn btn-light-blue btn-rounded bg-progressbar"><i class="fa fa-user left"></i> Sign up!</a>
-                                        <a class="btn btn-outline btn-rounded border-color" style="color: #5a40fc !important"><i class="fa fa-book left"></i> Learn more</a>
-                                    </li-->
+									<li class="wow fadeInUp" data-wow-delay="0.4s" style="margin-top: 1rem">
+                                        <a class="btn btn-light-blue bg-progressbar">{% trans 'Join Crowdsale' %}</a>
+                                        <!--a class="btn btn-outline btn-rounded border-color" style="color: #5a40fc !important"><i class="fa fa-book left"></i> Learn more</a-->
+                                    </li>
+                                    <li>
+                                    	{% trans 'Backed by' %} {% users_count %} {% trans 'participants' %}  
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -141,11 +175,56 @@
     </header>
     <!-- Main Navigation -->
 
+	{% if user.is_authenticated %}
+    <!--Main Layout-->
+    <main style="background-color: #5a40fc; color: #fff">
+
+        <div class="container">
+            
+            <!--Grid row-->
+            <div class="row py-5">
+
+                <!--Grid column-->
+                <div class="col-md-12 text-center">
+
+                    <p>{% trans 'token LCD' %} <br/>
+                    2 цифры после запятой <br/>
+                    Общее количество токенов 100 000 000 эмиссия разовая доп эмиссия не предусмотрена <br/>
+					50 000 000 на кошелек на который и эфир уходит с контракта <br/>
+					50 000 000 от общего числа токенов пойдет на краудсэйл <br/>
+					первый этап токены продаются с дисконтом 40% Oct. 17, 2017 at 8:00 A.M. GMT старт(в продаже только 25 000 000 токенов период может досрочно закончится если будет продано 25000000 токенов) </br>
+					второй этап October 31, 2017 at 8:00 P.M. GMT старт (в продаже остальные 25 000 000 токенов) конец November 30, 2017 at 8:00 P.M. GMT или же если все токены проданы </br>
+					Все эфиры идут на один адрес </br>
+					контракт должна быть возможность убить с адреса администратора <br/>
+					Цель собрать 35000ETH, (максимальная цель) </br>
+					Soft cap 5000ETH (минимальная цель если не собрана средства нужно вернуть инвесторам)</p>
+
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+        </div>
+
+    </main>
+    <!--Main Layout-->
+    {% endif %}    
+
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{% static 'js/compiled.min.js' %}"></script>
     <script>
         new WOW().init();
     </script>
+
+    <script>
+    setLanguage = function(language){
+    	option = document.getElementById("languageFormOption");
+    	option.setAttribute("value", language);
+    	document.getElementById("languageForm").submit();
+    }
+    </script>
+
     <script type="text/javascript">
     	
 	// set the date we're counting down to
