@@ -1,0 +1,213 @@
+{% load i18n static compress users %}
+<!DOCTYPE html>
+<html lang="en" class="full-height">
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Lucyd Lens, the world’s first blockchain-fueled smartglasses.</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Material Design Bootstrap -->
+    <link href="{% static 'css/compiled.min.css' %}" rel="stylesheet">
+    <style>
+        .top-nav-collapse {
+            background-color: #5a40fc !important; 
+        }
+        .navbar:not(.top-nav-collapse) {
+            background: #5a40fc !important;
+        }
+        @media (max-width: 768px) { 
+            .navbar:not(.top-nav-collapse) {
+                background: #5a40fc !important;
+            } 
+        }
+        @media (max-width: 740px) {
+            .full-height,
+            .full-height body,
+            .full-height header,
+            .full-height header .view {
+                height: 1100px; 
+            } 
+        }
+        .bg-gradient {
+			background: #5a40fc;  /* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #5a40fc, #5a40fc);  /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #5a40fc, #5a40fc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+        .bg-progressbar {
+			background: #5a40fc;  /* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #5a40fc, #5a40fc);  /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #5a40fc, #5a40fc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		}
+		.border-gradient {
+			border-width: 2px; 
+			border-style: solid;
+			border-image: linear-gradient(to right, #38ef7d, #11998e)
+		}
+		.border-color {
+			border: 2px solid #5a40fc;
+		}
+		.dropdown .dropdown-menu .dropdown-item:active, .dropdown .dropdown-menu .dropdown-item:focus, .dropdown .dropdown-menu .dropdown-item:hover {
+			background: #5a40fc;
+		}
+		/*
+		.dropdown .dropdown-menu .dropdown-item:active, .dropdown .dropdown-menu .dropdown-item:focus, .dropdown .dropdown-menu .dropdown-item:hover a {
+			color: white !important;
+		}
+		*/
+    </style>
+}
+</head>
+<body>
+
+    <!-- Main Navigation -->
+    <header>
+    
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+            <div class="container">
+                <a class="navbar-brand" href="#"><strong>Lucyd</strong></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7" aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+                    <ul class="navbar-nav mr-auto">
+                        <!--li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Team</a>
+                        </li-->
+                    </ul>
+                    <!--form class="form-inline">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    </form-->
+
+                  <div class="dropdown">
+                      <button style="background: #FFF; color: #5a40fc !important" class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ LANGUAGE_CODE }}
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                          {% get_current_language as LANGUAGE_CODE %}
+                          {% get_available_languages as LANGUAGES %}
+                          {% get_language_info_list for LANGUAGES as languages %}
+                          {% for language in languages %}
+                          <a class="dropdown-item {% if language.code == LANGUAGE_CODE %}disabled{% endif %}" href="#" onclick="setLanguage('{{ language.code }}');">{{ language.name_local }} ({{ language.code }})</a>
+                          {% endfor %}
+
+                      </div>
+                  </div>
+                  <form id="languageForm" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}" />
+                    <select name="language">
+                      <option id="languageFormOption" value="">
+                    </select>
+                  </form>
+
+                </div>
+            </div>
+        </nav>
+
+    {% block content %}
+    {% endblock content %}
+    
+    </header>
+    <!-- Main Navigation -->
+
+	{% if user.is_authenticated %}
+    <!--Main Layout-->
+    <main style="background-color: #5a40fc; color: #fff">
+
+        <div class="container">
+            
+            <!--Grid row-->
+            <div class="row py-5">
+
+                <!--Grid column-->
+                <div class="col-md-12 text-center">
+
+                    <p>{% trans 'token LCD' %} <br/>
+                    2 цифры после запятой <br/>
+                    Общее количество токенов 100 000 000 эмиссия разовая доп эмиссия не предусмотрена <br/>
+					50 000 000 на кошелек на который и эфир уходит с контракта <br/>
+					50 000 000 от общего числа токенов пойдет на краудсэйл <br/>
+					первый этап токены продаются с дисконтом 40% Oct. 17, 2017 at 8:00 A.M. GMT старт(в продаже только 25 000 000 токенов период может досрочно закончится если будет продано 25000000 токенов) </br>
+					второй этап October 31, 2017 at 8:00 P.M. GMT старт (в продаже остальные 25 000 000 токенов) конец November 30, 2017 at 8:00 P.M. GMT или же если все токены проданы </br>
+					Все эфиры идут на один адрес </br>
+					контракт должна быть возможность убить с адреса администратора <br/>
+					Цель собрать 35000ETH, (максимальная цель) </br>
+					Soft cap 5000ETH (минимальная цель если не собрана средства нужно вернуть инвесторам)</p>
+
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+        </div>
+
+    </main>
+    <!--Main Layout-->
+    {% endif %}    
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/compiled.min.js' %}"></script>
+    <script>
+        new WOW().init();
+    </script>
+
+    <script>
+    setLanguage = function(language){
+    	option = document.getElementById("languageFormOption");
+    	option.setAttribute("value", language);
+    	document.getElementById("languageForm").submit();
+    }
+    </script>
+
+    <script type="text/javascript">
+    	
+	// set the date we're counting down to
+	var target_date = new Date('Nov, 31, 2017').getTime();
+	 
+	// variables for time units
+	var days, hours, minutes, seconds;
+	 
+	// get tag element
+	var countdown = document.getElementById('countdown');
+	 
+	// update the tag with id "countdown" every 1 second
+	setInterval(function () {
+	 
+	    // find the amount of "seconds" between now and target
+	    var current_date = new Date().getTime();
+	    var seconds_left = (target_date - current_date) / 1000;
+	 
+	    // do some time calculations
+	    days = parseInt(seconds_left / 86400);
+	    seconds_left = seconds_left % 86400;
+	     
+	    hours = parseInt(seconds_left / 3600);
+	    seconds_left = seconds_left % 3600;
+	     
+	    minutes = parseInt(seconds_left / 60);
+	    seconds = parseInt(seconds_left % 60);
+	     
+	    // format countdown string + set tag value
+	    countdown.innerHTML = '<span class="days">' + days +  ' <b>Days</b></span> <span class="hours">' + hours + ' <b>Hours</b></span> <span class="minutes">'
+	    + minutes + ' <b>Minutes</b></span> <span class="seconds">' + seconds + ' <b>Seconds</b></span>';  
+	 
+	}, 1000);
+
+    </script>
+    <script type="text/javascript">
+        
+    $('.form-group').addClass('md-form');
+
+    </script>
+</body>
+</html>
