@@ -17,20 +17,7 @@ response = r.json()
 
 @register.simple_tag(takes_context=True)
 def all(context):
-	
-	#r = requests.get('https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress={}&apikey={}'.format(
-	#	CONTRACT_ADDRESS,
-	#	API_KEY,
-	#	))
-	#response = r.json()
-	#data = {
-	#	'all': 5000000000,
-	#	'sold': int(response['result']) - 5000000000,
-	#	'percent': ((int(response['result']) - 5000000000) * 100) / 5000000000
-	#}
-	#print(data)
-	#print(response['result'])
-	return 5000000000 #data
+	return 5000000000
 
 @register.simple_tag(takes_context=True)
 def sold(context):
