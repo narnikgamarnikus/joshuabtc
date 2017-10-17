@@ -119,42 +119,6 @@
     </header>
     <!-- Main Navigation -->
 
-	{% if user.is_authenticated %}
-    <!--Main Layout-->
-    <main style="background-color: #5a40fc; color: #fff">
-
-        <div class="container">
-            
-            <!--Grid row-->
-            <div class="row py-5">
-
-                <!--Grid column-->
-                <div class="col-md-12 text-center">
-
-                    <p>{% trans 'token LCD' %} <br/>
-                    2 цифры после запятой <br/>
-                    Общее количество токенов 100 000 000 эмиссия разовая доп эмиссия не предусмотрена <br/>
-					50 000 000 на кошелек на который и эфир уходит с контракта <br/>
-					50 000 000 от общего числа токенов пойдет на краудсэйл <br/>
-					первый этап токены продаются с дисконтом 40% Oct. 17, 2017 at 8:00 A.M. GMT старт(в продаже только 25 000 000 токенов период может досрочно закончится если будет продано 25000000 токенов) </br>
-					второй этап October 31, 2017 at 8:00 P.M. GMT старт (в продаже остальные 25 000 000 токенов) конец November 30, 2017 at 8:00 P.M. GMT или же если все токены проданы </br>
-					Все эфиры идут на один адрес </br>
-					контракт должна быть возможность убить с адреса администратора <br/>
-					Цель собрать 35000ETH, (максимальная цель) </br>
-					Soft cap 5000ETH (минимальная цель если не собрана средства нужно вернуть инвесторам)</p>
-
-                </div>
-                <!--Grid column-->
-
-            </div>
-            <!--Grid row-->
-
-        </div>
-
-    </main>
-    <!--Main Layout-->
-    {% endif %}    
-
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{% static 'js/compiled.min.js' %}"></script>
     <script>
