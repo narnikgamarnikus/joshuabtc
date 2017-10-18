@@ -11,7 +11,7 @@ from joshuabtc.files import views as filesviews
 
 urlpatterns = i18n_patterns(
     url(r'^$', TemplateView.as_view(template_name='pages/index.html'), name='index'),
-    url(r'^profile/$', TemplateView.as_view(template_name='pages/profile.html'), name='profile'),
+    url(r'^profile/$', login_required(TemplateView.as_view(template_name='pages/profile.html')), name='profile'),
     #url(r'^p/$', login_required(TemplateView.as_view(template_name='pages/home.html')), name='home'),
     #url(r'^p/buy-crypto/$', walletsviews.BuyCryptoView.as_view(template_name='pages/buy-crypto.html'), name='buy-crypto'),
     #url(r'^p/verification/$', filesviews.FileCreateView.as_view(template_name='pages/verification.html'), name='verification'),
