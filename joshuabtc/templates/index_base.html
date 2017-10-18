@@ -99,9 +99,16 @@
                           {% for language in languages %}
                           <a class="dropdown-item {% if language.code == LANGUAGE_CODE %}disabled{% endif %}" href="#" onclick="setLanguage('{{ language.code }}');">{{ language.name_local }} ({{ language.code }})</a>
                           {% endfor %}
-
                       </div>
                   </div>
+                  {% if user.is_authenticated %}
+                  <input style="background: #FFF; color: #5a40fc !important" class="btn btn-sm" onclick="location.href='{% url 'account_logout' %}'" type="button" value="{% trans 'Sign Out' %}">
+                          
+                  
+                  <!--li class="nav-item">
+                       <a style="background: #FFF; color: #5a40fc !important" class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
+                  </li-->
+                  {% endif %}
                   <form id="languageForm" action="{% url 'set_language' %}" method="post">{% csrf_token %}
                     <input name="next" type="hidden" value="{{ redirect_to }}" />
                     <select name="language">
