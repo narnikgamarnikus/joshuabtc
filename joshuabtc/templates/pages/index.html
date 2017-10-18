@@ -139,14 +139,27 @@
 
 										</div>
 
+
+                                        <div class="progress">
+                                            <div class="progress-bar bg-progressbar" role="progressbar" style="width: {% half_percent %}%" aria-valuenow="{% half_percent %}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between" style="font-size: 1rem">    
+
+                                            <span> {% half_sold %} LCD </span>
+                                            <span> {% trans 'Hardcap' %} {% half_all %} LCD </span>
+
+                                        </div>
+
+
 										<div class="progress">
-										    <div class="progress-bar bg-progressbar" role="progressbar" style="width: {% percent %}%" aria-valuenow="{% percent %}" aria-valuemin="0" aria-valuemax="100"></div>
+										    <div class="progress-bar bg-progressbar" role="progressbar" style="width: {% full_percent %}%" aria-valuenow="{% full_percent %}" aria-valuemin="0" aria-valuemax="100"></div>
 										</div>
 
 										<div class="d-flex justify-content-between" style="font-size: 1rem">	
 
-											<span> {% sold %} LCD </span>
-											<span> {% trans 'Hardcap' %} {% all %} LCD </span>
+											<span> {% full_sold %} LCD </span>
+											<span> {% trans 'Hardcap' %} {% full_all %} LCD </span>
 
 										</div>
 

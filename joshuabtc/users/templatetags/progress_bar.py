@@ -16,13 +16,26 @@ r = requests.get('https://api.etherscan.io/api?module=stats&action=tokensupply&c
 response = r.json()
 
 @register.simple_tag(takes_context=True)
-def all(context):
+def full_all(context):
 	return 5000000000
 
 @register.simple_tag(takes_context=True)
-def sold(context):
+def full_sold(context):
 	return int(response['result']) - 5000000000
 
 @register.simple_tag(takes_context=True)
-def percent(context):
+def full_percent(context):
 	return ((int(response['result']) - 5000000000) * 100) / 5000000000
+
+
+@register.simple_tag(takes_context=True)
+def half_all(context):
+	return 2500000000
+
+@register.simple_tag(takes_context=True)
+def half_sold(context):
+	return int(response['result']) - 2500000000
+
+@register.simple_tag(takes_context=True)
+def half_percent(context):
+	return ((int(response['result']) - 2500000000) * 100) / 2500000000	
