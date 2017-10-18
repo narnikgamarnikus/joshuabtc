@@ -34,8 +34,8 @@ def half_all(context):
 
 @register.simple_tag(takes_context=True)
 def half_sold(context):
-	return int(response['result']) - 2500000000
+	return int(response['result']) - 5000000000
 
 @register.simple_tag(takes_context=True)
 def half_percent(context):
-	return ((int(response['result']) - 2500000000) * 100) / 2500000000	
+	return ((int(response['result']) - 5000000000) * 100) / 2500000000

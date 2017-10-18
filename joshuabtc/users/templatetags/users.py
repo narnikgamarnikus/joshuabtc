@@ -25,7 +25,7 @@ def user_eth(context):
 	if r.user:
 		if r.user.is_authenticated:
 			eth = ETH.objects.get(user=r.user)
-			print(eth.private)
-			print(eth.public)
-			print(eth.address)
+			#print(eth.private)
+			#print(eth.public)
+			#print(eth.address)
 			return eth.address
