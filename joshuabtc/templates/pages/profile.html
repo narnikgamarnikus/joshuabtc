@@ -1,0 +1,46 @@
+{% extends "index_base.html" %}
+{% load static users %}
+{% block content %}
+<div class="container d-flex justify-content-between mt-5">
+
+	<div>
+		<!--img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={% user_btc %}"-->
+		<div id="qrcode"><a id="btcHref" href="bitcoin:{% user_btc %}?amount=1"></a></div>
+		<p>{% user_btc %}</p>
+		<input id="btcAmount" type="text">
+	</div>
+	
+	<div>
+	<img src="">
+	<p style="color:blue">{% user_eth %}</p>
+	</div>
+
+</div>
+{% endblock content %}
+
+{% block include_js %}
+<script>
+$('#btcAmount').on('input',function(e){
+	$('btcHref').find('table').remove();
+	console.log($('btcHref').find('table'));
+	var amount = $(this).val();
+	var btcHref = "bitcoin" + "{% user_btc %}?amount=" + amount;
+	$('#btcHref').attr('href', btcHref);
+});
+$(document).ready(function(){
+	$('#qrcode a').qrcode({ 
+		render: 'image',
+		text: "{% user_btc %}",
+		ecLevel: 'L',
+		size: "203"
+	});
+});
+</script>
+<script type="text/javascript" src="{% static 'js/ethereum-qr-code.min.js' %}"></script>
+<script type="text/javascript">
+
+alert(qr);
+
+</script>
+
+{% endblock include_js %}
