@@ -17,25 +17,34 @@ response = r.json()
 
 @register.simple_tag(takes_context=True)
 def full_all(context):
-	return 5000000000
+	return 50000000
 
 @register.simple_tag(takes_context=True)
 def full_sold(context):
-	return int(response['result']) - 5000000000
+	return int(response['result'][:-2]) - 50000000
 
 @register.simple_tag(takes_context=True)
 def full_percent(context):
-	return ((int(response['result']) - 5000000000) * 100) / 5000000000
+	return ((int(response['result'][:-2]) - 50000000) * 100) / 50000000
 
 
 @register.simple_tag(takes_context=True)
 def half_all(context):
-	return 2500000000
+	return 25000000
 
 @register.simple_tag(takes_context=True)
 def half_sold(context):
-	return int(response['result']) - 5000000000
+	return int(response['result'][:-2]) - 50000000
 
 @register.simple_tag(takes_context=True)
 def half_percent(context):
-	return ((int(response['result']) - 5000000000) * 100) / 2500000000
+	return ((int(response['result'][:-2]) - 50000000) * 100) / 25000000
+
+@register.simple_tag(takes_context=True)
+def participants_count(context):
+	r = requests.get('http://api.etherscan.io/api?module=account&action=txlist&address={}&startblock=0&endblock=99999999&sort=asc&apikey={}'.format(
+		CONTRACT_ADDRESS,
+		API_KEY,
+		))
+	response = r.json()
+	return len(set([address['from'] for address in response['result']]))
