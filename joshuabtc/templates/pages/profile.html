@@ -1,18 +1,46 @@
 {% extends "index_base.html" %}
-{% load static users %}
+{% load static users i18n progress_bar %}
 {% block content %}
-<div class="container d-flex justify-content-between mt-5">
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="container mt-5">
 
-	<div>
-		<!--img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={% user_btc %}"-->
-		<div id="qrcode"><a id="btcHref" href="bitcoin:{% user_btc %}?amount=1"></a></div>
-		<p>{% user_btc %}</p>
-		<input id="btcAmount" type="text">
+	<div class="progress">
+		<div class="progress-bar bg-progressbar" role="progressbar" style="width: {% percent %}%" aria-valuenow="{% percent %}" aria-valuemin="0" aria-valuemax="100"></div>
 	</div>
-	
-	<div>
-	<img src="">
-	<p style="color:blue">{% user_eth %}</p>
+
+	<div class="d-flex justify-content-between" style="font-size: 1rem">	
+
+		<span> {% sold %} LCD </span>
+		<span> {% trans 'Hardcap' %} {% all %} LCD </span>
+
+	</div>
+
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="container mt-5">
+
+	<div class="" style="text-align: center">
+
+		<div class="col-xs-6">
+			<!--img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={% user_btc %}"-->
+			<div id="qrcode" class="d-flex justify-content-center"><a id="btcHref" href="bitcoin:{% user_btc %}?amount=1"></a></div>
+			<p style="font-size: 0.75rem">{% user_btc %}</p>
+			<input id="btcAmount" type="text">
+		</div>
+		
+		<div class="col-xs-6">
+			<img src="">
+			<p style="font-size: 0.75rem">{% user_eth %}</p>
+		</div>
+
 	</div>
 
 </div>
