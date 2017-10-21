@@ -8,12 +8,19 @@ register = template.Library()
 API_KEY = 'VQDBC4GZA5MQT2F6IRW2U6RPH66HJRSF6S'
 CONTRACT_ADDRESS = '0xC592c63A86D03d1Ac2AAd4A0a2D5Cd1eB724dDBa'
 
-r = requests.get('https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress={}&apikey={}'.format(
-	CONTRACT_ADDRESS,
-	API_KEY,
-))
+#r = requests.get('https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress={}&apikey={}'.format(
+#	CONTRACT_ADDRESS,
+#	API_KEY,
+#))
 
-response = r.json()
+#response = r.json()
+
+def data():
+	r = requests.get('https://api.etherscan.io/api?module=stats&action=tokensupply&contractaddress={}&apikey={}'.format(
+		CONTRACT_ADDRESS,
+		API_KEY,
+		))
+	return r.json() 
 
 @register.simple_tag(takes_context=True)
 def full_all(context):
@@ -21,23 +28,28 @@ def full_all(context):
 
 @register.simple_tag(takes_context=True)
 def full_sold(context):
+	response = data()
 	return int(response['result'][:-2]) - 50000000
 
 @register.simple_tag(takes_context=True)
 def full_percent(context):
+	response = data()
 	return ((int(response['result'][:-2]) - 50000000) * 100) / 50000000
 
 
 @register.simple_tag(takes_context=True)
 def half_all(context):
+	response = data()
 	return 25000000
 
 @register.simple_tag(takes_context=True)
 def half_sold(context):
+	response = data()
 	return int(response['result'][:-2]) - 50000000
 
 @register.simple_tag(takes_context=True)
 def half_percent(context):
+	response = data()
 	return ((int(response['result'][:-2]) - 50000000) * 100) / 25000000
 
 @register.simple_tag(takes_context=True)
