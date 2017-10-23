@@ -1,9 +1,63 @@
 {% extends "index_base.html" %}
-{% load static users i18n progress_bar %}
+{% load cache static users i18n progress_bar %}
 {% block content %}
 <br />
 <br />
 <br />
+	<style>
+		
+        .bg-progressbar {
+			background: #5a40fc;  /* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #5a40fc, #5a40fc);  /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #5a40fc, #5a40fc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		}		
+
+	</style>
+	{% cache 60 sidebar request.user.username %}
+	<div class="container">
+										<div class="d-flex justify-content-between mt-5" style="font-size: 1rem">	
+
+											<span>{% trans 'Tokens sold (presale)' %}</span>
+											<span>{#% trans 'Updates automatically every 60 sec' %#}</span>
+
+										</div>
+
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="background: #ff3547; width: {% half_percent %}%" aria-valuenow="{% half_percent %}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between" style="font-size: 1rem">    
+
+                                            <span> {% half_sold %} LCD </span>
+                                            <span> {% trans 'Softcap' %} {% half_all %} LCD </span>
+
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mt-5" style="font-size: 1rem">   
+
+                                            <span>{% trans 'Tokens sold (crowdsale)' %}</span>
+                                            <span>{#% trans 'Updates automatically every 60 sec' %#}</span>
+
+                                        </div>
+
+										<div class="progress">
+										    <div class="progress-bar bg-progressbar" role="progressbar" style="width: {% full_percent %}%" aria-valuenow="{% full_percent %}" aria-valuemin="0" aria-valuemax="100"></div>
+										</div>
+
+										<div class="d-flex justify-content-between" style="font-size: 1rem">	
+
+											<span> {% full_sold %} LCD </span>
+											<span> {% trans 'Hardcap' %} {% full_all %} LCD </span>
+
+										</div>
+	</div>
+
+
+	<div class="container mt-5 mb-5" style="text-align: center">
+		<h3> LUCYD WALLET ADDRESS<h3>
+		<h4>0x7effF8fBA471CC125D5eC81A3C8625DB8ACfD78D<h4>
+		<a class="btn btn-light-blue bg-progressbar waves-effect waves-light" href="https://etherscan.io/address/0x7effF8fBA471CC125D5eC81A3C8625DB8ACfD78D">TRACK YOUR PURCHASE</a>
+	</div>
 
 	<div class="container mt-5 mb-5">
 
@@ -38,7 +92,7 @@
 							<a id="ethHref" href="ethereum:{% user_eth %}?value=1"></a>
 						</div>
 					</div>
-					<p class="mt-2" style="font-size: 0.75rem">{% user_eth %}</p>
+					<p class="mt-2" style="font-size: 0.75rem">0x{% user_eth %}</p>
 					<div class="d-flex justify-content-center">
 						<div class="">
 							<div class="md-form" style="width: 15rem">
@@ -53,7 +107,7 @@
 		</div>
 
 	</div>
-
+	{% endcache %}
 	<br />
 	<br />
 	<br />
@@ -75,8 +129,7 @@
 
 		<div style="text-align: center">
 
-			<button class="btn btn-primary"><i class="fa fa-money mr-1"></i> TERMS & CONDITIONS</button>
-		
+			<button class="btn btn-light-blue bg-progressbar waves-effect waves-light"><i class="fa fa-money mr-1"></i> TERMS & CONDITIONS</button>
 		</div>
 
 		<p class="mt-3" style="text-align: center">
@@ -168,43 +221,7 @@
 
 	</div>
 
-	<div class="container">
-										<div class="d-flex justify-content-between mt-5" style="font-size: 1rem">	
 
-											<span>{% trans 'Tokens sold (presale)' %}</span>
-											<span>{#% trans 'Updates automatically every 60 sec' %#}</span>
-
-										</div>
-
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" style="background: #ff3547; width: {% half_percent %}%" aria-valuenow="{% half_percent %}" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-
-                                        <div class="d-flex justify-content-between" style="font-size: 1rem">    
-
-                                            <span> {% half_sold %} LCD </span>
-                                            <span> {% trans 'Softcap' %} {% half_all %} LCD </span>
-
-                                        </div>
-
-                                        <div class="d-flex justify-content-between mt-5" style="font-size: 1rem">   
-
-                                            <span>{% trans 'Tokens sold (crowdsale)' %}</span>
-                                            <span>{#% trans 'Updates automatically every 60 sec' %#}</span>
-
-                                        </div>
-
-										<div class="progress">
-										    <div class="progress-bar bg-progressbar" role="progressbar" style="width: {% full_percent %}%" aria-valuenow="{% full_percent %}" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-
-										<div class="d-flex justify-content-between" style="font-size: 1rem">	
-
-											<span> {% full_sold %} LCD </span>
-											<span> {% trans 'Hardcap' %} {% full_all %} LCD </span>
-
-										</div>
-	</div>										
 <br />
 <br />
 
@@ -241,7 +258,7 @@ $('#ethAmount').on('input',function(e){
 	$('#divethqrcode').append(ethqrcode);
 	$('#ethqrcode').append(ethqrcodea);
 	var ethamount = $(this).val();
-	var ethHref = "ethereum" + ":" + "{% user_eth %}?value=" + ethamount + "&message=buy%20LCD";
+	var ethHref = "ethereum" + ":" + "0x{% user_eth %}?value=" + ethamount + "&message=buy%20LCD";
 	$('#ethHref').attr('href', ethHref);
 	$('#ethqrcode a').qrcode({ 
 		render: 'image',
